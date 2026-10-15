@@ -234,8 +234,32 @@ footer .ch{font-family:'Black Ops One';color:var(--org);letter-spacing:3px;font-
     return clamp(-r.top/total,0,1);
   }
   var lastAlt=-1,lastSpd=-1;
-  function frame(){
-    var p=prog();
+  /* AUTOPLAY MOVIE MODE: plays automatically on load like a cinematic */
+  var autoP=0, autoPlaying=true, autoStart=null, AUTO_DUR=9000;
+  function cancelAuto(){ if(autoPlaying){autoPlaying=false; hint.innerHTML='<i></i>SCROLL TO EXPLORE';} }
+  window.addEventListener('wheel', cancelAuto, {passive:true});
+  window.addEventListener('touchmove', cancelAuto, {passive:true});
+  stage.addEventListener('click', function(){
+    if(autoPlaying){ cancelAuto(); }
+    else { document.getElementById('top').scrollIntoView({behavior:'smooth'}); }
+  });
+  function frame(ts){
+    var p;
+    if(autoPlaying){
+      if(!autoStart) autoStart=ts;
+      autoP=Math.min((ts-autoStart)/AUTO_DUR,1);
+      /* ease in-out for cinematic feel */
+      p=autoP<.5 ? 2*autoP*autoP : 1-Math.pow(-2*autoP+2,2)/2;
+      if(autoP>=1){
+        autoPlaying=false;
+        /* movie done -> smooth scroll to main site */
+        setTimeout(function(){
+          document.getElementById('top').scrollIntoView({behavior:'smooth'});
+        }, 600);
+      }
+    } else {
+      p=prog();
+    }
     /* plane: 0 -> .22 */
     var pl=ss(0,.22,p);
     plane.style.opacity=pl*(1-ss(.18,.26,p));
@@ -282,7 +306,8 @@ footer .ch{font-family:'Black Ops One';color:var(--org);letter-spacing:3px;font-
     if(alt!==lastAlt){lastAlt=alt;altV.textContent=alt;}
     if(spd2!==lastSpd){lastSpd=spd2;spdV.textContent=spd2;}
     altHud.style.opacity=(p>.1&&p<.9)?1:0;
-    hint.style.opacity=p>.03?0:1;
+    hint.style.opacity=(autoPlaying||p>.03)?(autoPlaying?1:0):1;
+    if(autoPlaying) hint.innerHTML='<i></i>TAP TO SKIP';
     requestAnimationFrame(frame);
   }
   if(!reduce)requestAnimationFrame(frame); else {drop.style.display='none';}
