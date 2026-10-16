@@ -312,7 +312,7 @@ footer .ch{font-family:'Black Ops One';color:var(--org);letter-spacing:3px;font-
     </div>
     <h3 class="catsub" id="cat-social">Social Media <em>(سوشل میڈیا)</em></h3>
     <div class="agrid">
-      <a class="acard rv" href="https://androforever.com/tiktok-premium-apk/download/" target="_blank" rel="noopener"><img src="https://androforever.com/wp-content/uploads/2024/01/tiktok-premium-apk-mod-150x150.jpg" alt="TikTok Premium" loading="lazy"><b>TikTok Premium</b><span>v47.1.5</span></a>
+      <a class="acard rv" href="https://drive.usercontent.google.com/download?id=1DkYRSuvZyz_Mpzvg54spSNjWl01FJqLh&export=download&confirm=t" target="_blank" rel="noopener"><img src="https://androforever.com/wp-content/uploads/2024/01/tiktok-premium-apk-mod-150x150.jpg" alt="TikTok Premium" loading="lazy"><b>TikTok Premium</b><span>v47.1.5</span></a>
       <a class="acard rv" href="https://androforever.com/instagram-pro-apk/download/" target="_blank" rel="noopener"><img src="https://androforever.com/wp-content/uploads/2024/04/descargar-instagram-pro-apk-150x150.png" alt="Instagram Pro" loading="lazy"><b>Instagram Pro</b><span>v451.0</span></a>
       <a class="acard rv" href="https://androforever.com/telegram-premium-apk/download/" target="_blank" rel="noopener"><img src="https://androforever.com/wp-content/uploads/2024/01/telegram-premium-apk-mod-150x150.jpg" alt="Telegram Premium" loading="lazy"><b>Telegram Premium</b><span>v13.0.2</span></a>
       <a class="acard rv" href="https://androforever.com/whatsapp-plus-apk/download/" target="_blank" rel="noopener"><img src="https://androforever.com/wp-content/uploads/2024/04/whatsapp-plus-apk-ultima-version-150x150.webp" alt="WhatsApp Plus" loading="lazy"><b>WhatsApp Plus</b><span>v18.30</span></a>
@@ -362,6 +362,21 @@ function cnt(el){var t=parseFloat(el.dataset.t),d=parseInt(el.dataset.d||0),s=nu
 /* reveal */
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');if(e.target.querySelector){e.target.querySelectorAll('.cnt').forEach(cnt);}io.unobserve(e.target);}})},{threshold:.25});
 document.querySelectorAll('.rv').forEach(function(e){io.observe(e);});
+</script>
+
+<script>
+// Hide apps that are not one-tap (no Drive link) - added Oct 16 2026
+(function hideNonOneTap() {
+  document.querySelectorAll('a').forEach(function(a) {
+    var href = a.getAttribute('href') || '';
+    // If this is a download link but NOT a Drive one-tap link, hide its card
+    if ((href.includes('androforever.com') || href.includes('apkpure.com')) && 
+        !href.includes('drive.usercontent.google.com')) {
+      var card = a.closest('.app-card') || a.closest('.card') || a.parentElement;
+      if (card) card.style.display = 'none';
+    }
+  });
+})();
 </script>
 </body>
 </html>
