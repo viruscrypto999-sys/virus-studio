@@ -366,20 +366,18 @@ document.querySelectorAll('.rv').forEach(function(e){io.observe(e);});
 
 
 
+
+
 <script>
-// Show only one-tap (Drive) apps - Oct 16 2026
+// Show only one-tap apps: Drive links + GitHub direct APKs - Oct 16 2026
 (function() {
   document.querySelectorAll('a.acard').forEach(function(card) {
     var href = card.getAttribute('href') || '';
-    if (!href.includes('drive.usercontent.google.com')) {
+    var isOneTap = href.includes('drive.usercontent.google.com') || 
+                   href.includes('githubusercontent.com') ||
+                   (href.includes('github.com') && href.includes('.apk'));
+    if (!isOneTap) {
       card.style.display = 'none';
-    }
-  });
-  // Hide empty category sections
-  document.querySelectorAll('.cat-sec, .category').forEach(function(sec) {
-    var visible = sec.querySelectorAll('a.acard:not([style*="display: none"])');
-    if (visible.length === 0 && sec.querySelectorAll('a.acard').length > 0) {
-      sec.style.display = 'none';
     }
   });
 })();
