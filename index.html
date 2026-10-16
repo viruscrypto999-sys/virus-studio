@@ -364,19 +364,6 @@ var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isInter
 document.querySelectorAll('.rv').forEach(function(e){io.observe(e);});
 </script>
 
-<script>
-// Hide apps that are not one-tap (no Drive link) - added Oct 16 2026
-(function hideNonOneTap() {
-  document.querySelectorAll('a').forEach(function(a) {
-    var href = a.getAttribute('href') || '';
-    // If this is a download link but NOT a Drive one-tap link, hide its card
-    if ((href.includes('androforever.com') || href.includes('apkpure.com')) && 
-        !href.includes('drive.usercontent.google.com')) {
-      var card = a.closest('.app-card') || a.closest('.card') || a.parentElement;
-      if (card) card.style.display = 'none';
-    }
-  });
-})();
-</script>
+
 </body>
 </html>
